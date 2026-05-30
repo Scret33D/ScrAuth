@@ -1,0 +1,57 @@
+# ============================================================
+#          ScrAuth - Gelismis Yetkili Dogrulama Sistemi
+# ============================================================
+
+# --- Dogrulama Yontemleri ---
+# Hangi yontemlerin aktif oldugunu secin.
+auth-methods:
+  discord: true      # Discord Bot ile kod dogrulamasi
+  password: false    # Sifre ile dogrulama (discord: false ise aktif)
+  ip-check: true     # Bilinen IP'den baglaninca otomatik gec
+
+# --- Dogrulama Sifresi (auth-methods.password: true ise kullanilir) ---
+admin-password: "degistir_123"
+
+# --- Zaman Asimi ---
+# Oyuncu kac saniye icerisinde dogrulama yapamassa atilsin?
+timeout-seconds: 60
+
+# --- Discord Bot Ayarlari ---
+discord:
+  # Discord bot tokeninizi buraya girin.
+  # Discord Developer Portal -> Applications -> Bot -> Token
+  bot-token: "BURAYA_BOT_TOKENINIZI_GIRIN"
+
+  # Dogrulama kodunun gonderilecegi Discord sunucu ID'si (opsiyonel, DM yeterli)
+  # guild-id: "123456789012345678"
+
+  # Hangi Discord kanalinda !dogrula komutunu kullansın?
+  # Bos birakılırsa sadece bot DM'i kabul eder.
+  auth-channel-id: ""
+
+  # Minecraft UUID -> Discord Kullanici ID eslestirme
+  # Ornek:
+  # "550e8400-e29b-41d4-a716-446655440000": "123456789012345678"
+  player-discord-map:
+    # "MINECRAFT_UUID": "DISCORD_KULLANICI_ID"
+
+# --- Mesajlar ---
+messages:
+  prefix: "&8[&cScrAuth&8] &r"
+  waiting-discord: "&cDogrulama bekleniyor! Discord'da bota &e!dogrula &cyazin."
+  waiting-password: "&cDogrulama bekleniyor! &e/admindogrula <sifre> &ckomutuyla giris yapin."
+  success: "&aDogrulama basarili! Hosgeldiniz."
+  fail-wrong-code: "&cYanlis kod! Lutfen Discord'dan yeni bir kod alin."
+  fail-no-discord-link: "&cDiscord hesabiniz bagli degil! Config'e UUID -> Discord ID eslesmenizi ekleyin."
+  new-ip-detected: "&cYENI IP ADRESI ALGILANDI! Tekrar dogrulama gerekiyor."
+  timeout-kick: "ScrAuth: Dogrulama suresi doldu. Lutfen tekrar giris yapin."
+  authreset-success: "&a{player} adli yetkilinin IP kaydi sifirlanmistir."
+  authreset-fail: "&cBu oyuncu veritabaninda bulunamadi."
+
+# --- Efekt Ayarlari ---
+effects:
+  blindness: true    # Karantinadayken goz kararsin
+  slowness: true     # Karantinadayken hareket edemesin (Slowness 255)
+  block-chat: true   # Karantinadayken sohbet yapmasin
+  block-move: true   # Karantinadayken hareket yapmasin (yukarida slowness kullanir)
+  barrier-inventory: true  # Karantinadayken envanteri Barrier ile kapla

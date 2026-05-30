@@ -1,0 +1,31 @@
+name: ScrAuth
+version: 1.0.0
+main: com.example.scrauth.ScrAuthPlugin
+api-version: '1.20'
+author: ScrAuth
+description: Yetkili hesapları Discord ve IP dogrulamasiyla koruyan gelismis guvenlik eklentisi.
+
+commands:
+  admindogrula:
+    description: Discord'dan alinan kodu girerek dogrulamayi tamamlar.
+    usage: /admindogrula <kod>
+    permission: scrauth.auth
+  authreset:
+    description: Bir yetkilinin IP kaydini sifirlar.
+    usage: /authreset <oyuncu>
+    permission: scrauth.admin
+  scrauthadmin:
+    description: ScrAuth yonetim komutu.
+    usage: /scrauthadmin <reload|status>
+    permission: scrauth.admin
+
+permissions:
+  scrauth.auth:
+    description: Dogrulama komutunu kullanabilir.
+    default: op
+  scrauth.admin:
+    description: ScrAuth yonetim komutlarini kullanabilir.
+    default: op
+  scrauth.protected:
+    description: Bu izne sahip oyuncular dogrulama sistemine tabi tutulur.
+    default: op

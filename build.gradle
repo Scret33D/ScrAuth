@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'com.example.scrauth'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url 'https://m2.dv8tion.net/releases' }
+}
+
+dependencies {
+    // Paper API - compileOnly (sunucu zaten sağlıyor)
+    compileOnly 'io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT'
+
+    // JDA (Discord Bot) - shadow ile jar'a gömülecek
+    implementation 'net.dv8tion:JDA:5.0.0-beta.21'
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    // JDA'nın gereksiz bileşenlerini hariç tut (sunucu boyutunu küçültür)
+    exclude 'natives/**'
+    minimize {
+        // JDA'yı minimize etme - reflection kullandığı için sorun çıkabilir
+        exclude(dependency('net.dv8tion:JDA:.*'))
+        exclude(dependency('com.neovisionaries:.*'))
+        exclude(dependency('com.squareup.okhttp3:.*'))
+        exclude(dependency('org.slf4j:.*'))
+    }
+    // Shade (relocation) - başka eklentilerle çakışmayı önler
+    relocate 'net.dv8tion', 'com.example.scrauth.libs.dv8tion'
+    relocate 'com.squareup', 'com.example.scrauth.libs.squareup'
+    relocate 'okhttp3', 'com.example.scrauth.libs.okhttp3'
+    relocate 'okio', 'com.example.scrauth.libs.okio'
+    relocate 'club.minnced', 'com.example.scrauth.libs.minnced'
+    relocate 'com.neovisionaries', 'com.example.scrauth.libs.neovisionaries'
+    relocate 'gnu.trove', 'com.example.scrauth.libs.trove'
+    relocate 'org.json', 'com.example.scrauth.libs.json'
+}
+
+tasks.named('build') {
+    dependsOn shadowJar
+}
